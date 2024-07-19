@@ -1,0 +1,186 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+// swift-module-flags: -target x86_64-apple-ios14.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name FOCR
+import AVFoundation
+@_exported import FOCR
+import Foundation
+import MobileCoreServices
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import os.log
+import os
+@objc @objcMembers public class OCRData : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let requestId: Swift.String?
+  @objc final public let imageURL: Swift.String?
+  @objc final public let aiResponse: FOCR.TransformData?
+  @objc final public let transformData: FOCR.TransformData?
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_inheritsConvenienceInitializers @objcMembers final public class FtechOCRManager : ObjectiveC.NSObject {
+  @objc public static func instance() -> FOCR.FtechOCRManager
+  @objc final public func initSDK(appID: Swift.String, key: Swift.String, onSuccess: @escaping () -> Swift.Void, onFailure: @escaping (FOCR.FOCRError) -> Swift.Void)
+  @objc final public func getConfig(onSuccess: @escaping ([FOCR.ConfigData]) -> Swift.Void, onFailure: @escaping (FOCR.FOCRError) -> Swift.Void)
+  @objc final public func startOCR(with file: Foundation.URL, _ config: FOCR.ConfigMode, _ isMathML: Swift.Bool = false, onSuccess: @escaping (FOCR.OCRData) -> Swift.Void, onFailure: @escaping (FOCR.FOCRError) -> Swift.Void)
+  @objc final public func export(with requestID: Swift.String, fileType: Swift.String, onSuccess: @escaping (Swift.String) -> Swift.Void, onFailure: @escaping (FOCR.FOCRError) -> Swift.Void)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_Concurrency.MainActor(unsafe) open class FOCRViewController : UIKit.UIViewController {
+  @_Concurrency.MainActor(unsafe) final public let data: FOCR.OCRData
+  @_Concurrency.MainActor(unsafe) public init(data: FOCR.OCRData)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func viewDidLoad()
+  @objc deinit
+}
+extension FOCR.FOCRViewController : UIKit.UITableViewDelegate, UIKit.UITableViewDataSource {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func tableView(_ tableView: UIKit.UITableView, heightForRowAt indexPath: Foundation.IndexPath) -> CoreFoundation.CGFloat
+}
+@objc @objcMembers public class TransformData : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let questions: [Swift.String]?
+  @objc final public let tableError: Swift.String?, fieldError: Swift.String?
+  @objc final public let recordType: Swift.String?
+  @objc final public let data: [FOCR.InfoData]
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+public enum HTTPStatusCode : Swift.Int, Swift.Error {
+  case `continue`
+  case switchingProtocols
+  case processing
+  case ok
+  case created
+  case accepted
+  case nonAuthoritativeInformation
+  case noContent
+  case resetContent
+  case partialContent
+  case multiStatus
+  case alreadyReported
+  case IMUsed
+  case multipleChoices
+  case movedPermanently
+  case found
+  case seeOther
+  case notModified
+  case useProxy
+  case switchProxy
+  case temporaryRedirect
+  case permenantRedirect
+  case badRequest
+  case unauthorized
+  case paymentRequired
+  case forbidden
+  case notFound
+  case methodNotAllowed
+  case notAcceptable
+  case proxyAuthenticationRequired
+  case requestTimeout
+  case conflict
+  case gone
+  case lengthRequired
+  case preconditionFailed
+  case payloadTooLarge
+  case URITooLong
+  case unsupportedMediaType
+  case rangeNotSatisfiable
+  case expectationFailed
+  case teapot
+  case misdirectedRequest
+  case unprocessableEntity
+  case locked
+  case failedDependency
+  case upgradeRequired
+  case preconditionRequired
+  case tooManyRequests
+  case requestHeaderFieldsTooLarge
+  case noResponse
+  case unavailableForLegalReasons
+  case SSLCertificateError
+  case SSLCertificateRequired
+  case HTTPRequestSentToHTTPSPort
+  case clientClosedRequest
+  case internalServerError
+  case notImplemented
+  case badGateway
+  case serviceUnavailable
+  case gatewayTimeout
+  case HTTPVersionNotSupported
+  case variantAlsoNegotiates
+  case insufficientStorage
+  case loopDetected
+  case notExtended
+  case networkAuthenticationRequired
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class FOCRError : Foundation.NSError {
+  @objc public init(code: Swift.Int, message: Swift.String)
+  @objc deinit
+}
+@objc @objcMembers public class ConfigData : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let id: Swift.String?
+  @objc final public let name: Swift.String?
+  @objc final public let mode: [FOCR.ConfigMode]
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @objcMembers public class ConfigMode : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let id: Swift.String?
+  @objc final public let name: Swift.String?
+  @objc final public let responseFormat: Swift.String?
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @objcMembers public class RegisterData : ObjectiveC.NSObject, Swift.Codable {
+  @objc final public let token: Swift.String?
+  @objc final public let service: FOCR.EKYCService?
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class EKYCService : ObjectiveC.NSObject, Swift.Codable {
+  @objc override dynamic public init()
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @objcMembers public class InfoData : ObjectiveC.NSObject, Swift.Codable {
+  final public let id: Swift.Int?
+  public var type: FOCR.InfoDataType?
+  @objc final public let key: Swift.String?
+  @objc final public let title: Swift.String?
+  @objc final public let content: Swift.String?
+  @objc final public let data: [FOCR.InfoData]
+  required public init(from decoder: any Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public enum InfoDataType : Swift.String, Swift.Codable {
+  case array
+  case table
+  case text
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension FOCR.HTTPStatusCode : Swift.Equatable {}
+extension FOCR.HTTPStatusCode : Swift.Hashable {}
+extension FOCR.HTTPStatusCode : Swift.RawRepresentable {}
+extension FOCR.InfoDataType : Swift.Equatable {}
+extension FOCR.InfoDataType : Swift.Hashable {}
+extension FOCR.InfoDataType : Swift.RawRepresentable {}

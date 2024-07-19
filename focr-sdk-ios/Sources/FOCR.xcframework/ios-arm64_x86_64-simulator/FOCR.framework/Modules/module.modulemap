@@ -1,0 +1,11 @@
+framework module FOCR {
+  umbrella header "FOCR.h"
+  export *
+
+  module * { export * }
+}
+
+module FOCR.Swift {
+  header "FOCR-Swift.h"
+  requires objc
+}
