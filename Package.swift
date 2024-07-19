@@ -17,7 +17,9 @@ let package = Package(
         .binaryTarget(name: "FOCR", path: "Sources/FOCR.xcframework"),
         
         .target(
-            name: "focr-sdk-ios"),
+            name: "focr-sdk-ios",
+            dependencies: ["FOCR"]
+        ),
         .testTarget(
             name: "focr-sdk-iosTests",
             dependencies: ["focr-sdk-ios"]),
